@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.StartActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#E55B5B"
+        android:paddingBottom="20dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/startActivityBtnSignInWithGoogle"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/startActivityBtnLeft"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_start_activity_slider"
+            android:fontFamily="sans-serif"
+            android:text="asd"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true" />
+
+        <Button
+            android:id="@+id/startActivityBtnRight"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_start_activity_slider"
+            android:fontFamily="sans-serif"
+            android:text="dsa"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+
+        <Button
+            android:id="@+id/startActivityBtnSignInWithGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/btn_start_activity"
+            android:fontFamily="sans-serif"
+            android:text="@string/sign_in_with_google"
+            android:textColor="#1e1e1e"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="80dp"
+            android:layout_alignBottom="@+id/startActivityBtnSignInWithEmail"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/startActivityBtnSignInWithEmail"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/btn_start_activity"
+            android:fontFamily="sans-serif"
+            android:text="@string/sign_in_with_email"
+            android:textAllCaps="false"
+            android:textColor="#1e1e1e"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom = "0dp"
+            android:layout_marginLeft="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.osamamac.taskmanager.Activities.SelectLabelActivity">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/selectLabelTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/selectLabelEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Label Name" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:id="@+id/selectLabelRelLayout">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/calendar"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/selectLabelImage" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/selectLabelImage"
+            android:text="Charcoal"
+            android:textSize="24sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:textStyle="bold"
+            android:id="@+id/selectLabelTypeTextView"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/selectLabelTypeTextView"
+            android:background="#123123"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+
+        </View>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/calendar"
+            android:layout_alignParentRight="true"
+            android:layout_margin="8dp"
+            android:id="@+id/selectLabelDownArrow" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_task_project_fragment_title"
+        android:textStyle="bold"
+        android:textSize="26sp"
+        android:textColor="#404040"
+        android:layout_marginBottom="16dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="8dp"
+        android:id="@+id/addNewTaskProjectFragmentInbox">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_drawable"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addNewTaskProjectFramentInboxImage"
+            android:backgroundTint="#AC1234" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/addNewTaskProjectFramentInboxImage"
+            android:text="@string/add_new_task_project_fragment_inbox"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="8dp"
+        android:id="@+id/addNewTaskProjectFragmentPersonal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_drawable"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addNewTaskProjectFramentPersonalImage"
+            android:backgroundTint="#BCD245" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/addNewTaskProjectFramentPersonalImage"
+            android:text="@string/add_new_task_project_fragment_personal"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="8dp"
+        android:id="@+id/addNewTaskProjectFragmentShopping">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_drawable"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addNewTaskProjectFramentShoppingImage"
+            android:backgroundTint="#789576" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/addNewTaskProjectFramentShoppingImage"
+            android:text="@string/add_new_task_project_fragment_shopping"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="8dp"
+        android:id="@+id/addNewTaskProjectFragmentWork">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_drawable"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addNewTaskProjectFramentWorkImage"
+            android:backgroundTint="#CA2579" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/addNewTaskProjectFramentWorkImage"
+            android:text="@string/add_new_task_project_fragment_work"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="8dp"
+        android:id="@+id/addNewTaskProjectFragmentErrands">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_drawable"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addNewTaskProjectFramentErrandsImage"
+            android:backgroundTint="#FD6454" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/addNewTaskProjectFramentErrandsImage"
+            android:text="@string/add_new_task_project_fragment_errands"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="8dp"
+        android:id="@+id/addNewTaskProjectFragmentMovies">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/circle_drawable"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addNewTaskProjectFramentMoviesImage"
+            android:backgroundTint="#ABCDFE" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/addNewTaskProjectFramentMoviesImage"
+            android:text="@string/add_new_task_project_fragment_movies"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnCancelAddNewTaskProjectFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="right" />
+</LinearLayout>
