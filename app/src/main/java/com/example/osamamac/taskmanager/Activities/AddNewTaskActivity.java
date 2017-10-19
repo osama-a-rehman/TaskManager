@@ -1,6 +1,8 @@
 package com.example.osamamac.taskmanager.Activities;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,19 +10,25 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.example.osamamac.taskmanager.Fragments.AddNewTaskPriorityFragment;
 import com.example.osamamac.taskmanager.Fragments.AddNewTaskProjectFragment;
 import com.example.osamamac.taskmanager.Interfaces.AddNewTaskFragmentsInterface;
 import com.example.osamamac.taskmanager.R;
+import com.example.osamamac.taskmanager.Utilities.Time;
 import com.example.osamamac.taskmanager.Utilities.Utils;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddNewTaskActivity extends AppCompatActivity implements View.OnClickListener, AddNewTaskFragmentsInterface {
 
@@ -32,7 +40,12 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
     private FragmentManager fragmentManager;
 
     private Calendar calendar;
-    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private Time time;
+
+    private DatePickerDialog.OnDateSetListener onDateSetListener;
+    private TimePickerDialog.OnTimeSetListener onTimeSetListener;
+
+    private String fullTime = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +65,7 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         });
 
         init();
+
     }
 
     private void init(){
@@ -81,15 +95,40 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
         calendar = Calendar.getInstance();
 
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+//                dateTextView.setText(Utils.getStringMonth(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.DATE) + ", " + calendar.get(Calendar.YEAR));
+//                Toast.makeText(AddNewTaskActivity.this, calendar.get(Calendar.MONTH) + " " + calendar.get(Calendar.DATE) + ", " + calendar.get(Calendar.YEAR), Toast.LENGTH_SHORT).show();
+
+                fullTime = Utils.getStringMonth(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.DATE) + ", " + calendar.get(Calendar.YEAR);
+
+                dateTextView.setText(fullTime);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddNewTaskActivity.this, onTimeSetListener, calendar.getTime().getHours(), calendar.getTime().getMinutes(), false);
+
+                timePickerDialog.setCancelable(false);
+
+                timePickerDialog.show();
             }
 
+        };
+
+        onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                time = Utils.getTime(hourOfDay, minute);
+
+                fullTime += " - " + time.getHours() + ":" + time.getMinutes() + " " + time.getMode();
+
+                dateTextView.setText
+                        (fullTime);
+            }
         };
 
         fragmentManager = getSupportFragmentManager();
@@ -109,6 +148,12 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
                 //new DatePickerDialog();
 
+                final DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewTaskActivity.this, onDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                datePickerDialog.setCanceledOnTouchOutside(false);
+
+                datePickerDialog.show();
+
                 break;
 
             case R.id.addNewTaskRelLayoutPriority:
@@ -120,12 +165,15 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.addNewTaskRelLayoutLabels:
 
-                Intent intent = new Intent(AddNewTaskActivity.this, SelectLabelActivity.class);
-                startActivity(intent);
+                Intent labelIntent = new Intent(AddNewTaskActivity.this, SelectLabelActivity.class);
+                startActivityForResult(labelIntent, Utils.LABEL_REQUEST_CODE);
 
                 break;
 
             case R.id.addNewTaskRelLayoutComments:
+                Intent commIntent = new Intent(AddNewTaskActivity.this, AddCommentsActivity.class);
+                startActivityForResult(commIntent, Utils.COMMENTS_REQUEST_CODE);
+
                 break;
 
             case R.id.addNewTaskRelLayoutReminders:
@@ -133,6 +181,30 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.addNewTaskRelLayoutLocations:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+
+        Log.i("Request", String.valueOf(requestCode));
+        Log.i("Request", String.valueOf(resultCode));
+
+        Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
+
+        if(requestCode == Utils.LABEL_REQUEST_CODE && resultCode == Utils.LABEL_RESULT_CODE){
+            if(data.hasExtra(Utils.LABEL_RESULT_EXTRA)){
+                labelsTextView.setText(data.getStringExtra(Utils.LABEL_RESULT_EXTRA).toString());
+
+//                Toast.makeText(this, data.getStringExtra(Utils.LABEL_RESULT_EXTRA).toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if(requestCode == Utils.COMMENTS_REQUEST_CODE && resultCode == Utils.COMMENTS_RESULT_CODE){
+            if(data.hasExtra(Utils.COMMENTS_RESULT_EXTRA)){
+                // Update comments textview
+            }
         }
     }
 
@@ -149,4 +221,5 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         }
         //Toast.makeText(this, value, Toast.LENGTH_LONG).show();
     }
+
 }

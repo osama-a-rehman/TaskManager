@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.StartActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Activities.SignInWithEmailActivity" />
         <activity
             android:name=".Activities.MainActivity"
@@ -27,7 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SelectLabelActivity"></activity>
+        <activity android:name=".Activities.SelectLabelActivity" />
+        <activity android:name=".Activities.AddCommentsActivity"></activity>
     </application>
 
 </manifest>

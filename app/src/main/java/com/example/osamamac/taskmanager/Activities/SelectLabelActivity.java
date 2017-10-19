@@ -1,5 +1,6 @@
 package com.example.osamamac.taskmanager.Activities;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.osamamac.taskmanager.R;
+import com.example.osamamac.taskmanager.Utilities.Utils;
 
 import org.w3c.dom.Text;
 
@@ -47,6 +49,11 @@ public class SelectLabelActivity extends AppCompatActivity{
                 labelTextInputLayout.setError(getString(R.string.select_label_error_empty_label));
             }else{
                 labelTextInputLayout.setErrorEnabled(false);
+
+                Intent intent = new Intent();
+                intent.putExtra(Utils.LABEL_RESULT_EXTRA, labelText);
+                setResult(Utils.LABEL_RESULT_CODE, intent);
+                finish();
             }
         }
         return super.onOptionsItemSelected(item);
