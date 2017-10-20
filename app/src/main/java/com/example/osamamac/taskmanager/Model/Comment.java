@@ -5,14 +5,13 @@ import com.example.osamamac.taskmanager.Utilities.Time;
 import java.util.Date;
 
 public class Comment {
-    private String comment;
-    private Date date;
-    private Time time;
 
-    public Comment(String comment,Date date, Time time) {
+    private String comment;
+    private String dateTime;
+
+    public Comment(String comment, String dateTime) {
         this.comment = comment;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
     public String getComment() {
@@ -23,19 +22,11 @@ public class Comment {
         this.comment = comment;
     }
 
-    public Time getTime() {
-        return time;
+    public String getDateTime() {
+        return dateTime;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }

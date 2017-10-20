@@ -26,9 +26,17 @@ public class SelectLabelActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_label);
 
+        setTitle("Add Label");
+
         labelTextInputLayout = (TextInputLayout) findViewById(R.id.selectLabelTextInputLayout);
 
         labelEditText = (EditText) findViewById(R.id.selectLabelEditText);
+
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(Utils.SET_LABEL_EXTRA)){
+            labelEditText.setText(intent.getStringExtra(Utils.SET_LABEL_EXTRA));
+        }
     }
 
     @Override

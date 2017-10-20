@@ -27,8 +27,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SelectLabelActivity" />
-        <activity android:name=".Activities.AddCommentsActivity"></activity>
+        <activity
+            android:name=".Activities.SelectLabelActivity"
+            android:parentActivityName=".Activities.AddNewTaskActivity" />
+        <activity
+            android:name=".Activities.AddCommentsActivity"
+            android:parentActivityName=".Activities.AddNewTaskActivity" />
+        <activity android:name=".Activities.AddRemindersActivity" />
+        <activity android:name=".Activities.AddLocationsActivity"></activity>
     </application>
 
 </manifest>

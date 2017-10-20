@@ -1,6 +1,8 @@
 package com.example.osamamac.taskmanager.Activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -47,6 +50,8 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
     private String fullTime = "";
 
+    private boolean showDiscardDialog = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,14 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         });
 
         init();
+
+        /*Intent intent = new Intent(this, Mote.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1253, intent, PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),pendingIntent );
+        Toast.makeText(this, "Alarm worked.", Toast.LENGTH_LONG).show();*/
 
     }
 
@@ -146,8 +159,6 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.addNewTaskRelLayoutDate:
 
-                //new DatePickerDialog();
-
                 final DatePickerDialog datePickerDialog = new DatePickerDialog(AddNewTaskActivity.this, onDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
                 datePickerDialog.setCanceledOnTouchOutside(false);
@@ -166,6 +177,11 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
             case R.id.addNewTaskRelLayoutLabels:
 
                 Intent labelIntent = new Intent(AddNewTaskActivity.this, SelectLabelActivity.class);
+
+                if(!labelsTextView.getText().toString().equals("No Labels")){
+                    labelIntent.putExtra(Utils.SET_LABEL_EXTRA, labelsTextView.getText().toString());
+                }
+
                 startActivityForResult(labelIntent, Utils.LABEL_REQUEST_CODE);
 
                 break;
@@ -180,6 +196,10 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.addNewTaskRelLayoutLocations:
+
+                Intent locIntent = new Intent(AddNewTaskActivity.this, AddLocationsActivity.class);
+                startActivityForResult(locIntent, Utils.LOCATIONS_REQUEST_CODE);
+
                 break;
         }
     }
@@ -196,14 +216,15 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         if(requestCode == Utils.LABEL_REQUEST_CODE && resultCode == Utils.LABEL_RESULT_CODE){
             if(data.hasExtra(Utils.LABEL_RESULT_EXTRA)){
                 labelsTextView.setText(data.getStringExtra(Utils.LABEL_RESULT_EXTRA).toString());
-
+                showDiscardDialog = true;
 //                Toast.makeText(this, data.getStringExtra(Utils.LABEL_RESULT_EXTRA).toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
         if(requestCode == Utils.COMMENTS_REQUEST_CODE && resultCode == Utils.COMMENTS_RESULT_CODE){
             if(data.hasExtra(Utils.COMMENTS_RESULT_EXTRA)){
-                // Update comments textview
+                commentsTextView.setText(data.getStringExtra(Utils.COMMENTS_RESULT_EXTRA).toString());
+                showDiscardDialog = true;
             }
         }
     }
@@ -213,13 +234,41 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         if(value != null && !value.equals("")){
             if(id == Utils.PROJECT_FRAGMENT_ID){
                 projectTextView.setText(value);
+                showDiscardDialog = true;
+
             }else if(id == Utils.PRIORITY_FRAGMENT_ID){
                 priorityTextView.setText(value);
+                showDiscardDialog = true;
             }
-
-
         }
         //Toast.makeText(this, value, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(showDiscardDialog){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+            alertDialogBuilder.setTitle("Discard Task ?");
+            alertDialogBuilder.setMessage("Discard your changes to the task ?");
+
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            alertDialogBuilder.show();
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

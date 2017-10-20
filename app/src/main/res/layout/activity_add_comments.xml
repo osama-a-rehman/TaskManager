@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         android:id="@+id/addNewCommentsListView"
         android:layout_above="@+id/addNewCommentsLayout"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll">
 
     </ListView>
 
@@ -38,7 +40,8 @@
             android:layout_height="wrap_content"
             android:text="Add"
             android:id="@id/addNewCommentsButton"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:enabled="false"/>
 
     </RelativeLayout>
 
