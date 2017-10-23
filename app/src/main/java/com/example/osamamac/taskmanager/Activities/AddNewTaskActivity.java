@@ -193,6 +193,9 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.addNewTaskRelLayoutReminders:
+                Intent remIntent = new Intent(AddNewTaskActivity.this, AddRemindersActivity.class);
+                startActivityForResult(remIntent, Utils.REMINDERS_REQUEST_CODE);
+
                 break;
 
             case R.id.addNewTaskRelLayoutLocations:

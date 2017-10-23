@@ -22,6 +22,10 @@ public final class Utils {
     public static final int COMMENTS_RESULT_CODE = 1001;
     public static final int COMMENTS_REQUEST_CODE = 1001;
 
+    public static final String REMINDERS_RESULT_EXTRA = "REMINDERS_RESULT";
+    public static final int REMINDERS_RESULT_CODE = 1002;
+    public static final int REMINDERS_REQUEST_CODE = 1002;
+
     public static final String LOCATIONS_RESULT_EXTRA = "LOCATIONS_RESULT";
     public static final int LOCATIONS_RESULT_CODE = 1003;
     public static final int LOCATIONS_REQUEST_CODE = 1003;

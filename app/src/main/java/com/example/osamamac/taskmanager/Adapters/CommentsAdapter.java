@@ -60,6 +60,4 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 
         return currentView;
     }
-
-
 }

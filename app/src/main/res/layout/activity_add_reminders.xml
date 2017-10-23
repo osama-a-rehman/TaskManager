@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.osamamac.taskmanager.Activities.AddRemindersActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addNewRemindersListView"
+        android:layout_above="@+id/addNewRemindersLayout"
+        android:padding="8dp">
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@id/addNewRemindersLayout"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:text="Select Date And Time"
+            android:id="@+id/addNewReminderDateBtn" />
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/addNewReminderDateBtn"
+            android:id="@+id/addNewReminderSpinner">
+
+        </Spinner>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.757"
+            android:layout_height="match_parent"
+            android:text="Add"
+            android:id="@+id/addNewReminderAddBtn"
+            android:layout_alignParentRight="true"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

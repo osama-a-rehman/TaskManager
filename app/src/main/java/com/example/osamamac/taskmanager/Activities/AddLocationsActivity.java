@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.example.osamamac.taskmanager.Fragments.AddNewLocationFragment;
-import com.example.osamamac.taskmanager.Fragments.AddNewTaskProjectFragment;
 import com.example.osamamac.taskmanager.Interfaces.AddNewTaskFragmentsInterface;
 import com.example.osamamac.taskmanager.R;
 
@@ -35,7 +34,7 @@ public class AddLocationsActivity extends AppCompatActivity{
                 AddNewLocationFragment locationFragment = new AddNewLocationFragment(new AddNewTaskFragmentsInterface() {
                     @Override
                     public void doneSelecting(int id, String value) {
-                        // Add New Location
+
                     }
                 });
 
@@ -43,5 +42,4 @@ public class AddLocationsActivity extends AppCompatActivity{
             }
         });
     }
-
 }
