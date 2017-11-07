@@ -58,7 +58,7 @@ public class AddCommentsActivity extends AppCompatActivity {
         if(tempCommentsList != null && tempCommentsList.size() > 0){
             commentsArray = (ArrayList<Comment>) tempCommentsList;
 
-            Toast.makeText(this, tempCommentsList.size() + "", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, tempCommentsList.size() + "", Toast.LENGTH_LONG).show();
         }
 
         /*commentsArray.add(new Comment("hello there", new Date(2017, 8, 12), new Time("10", "57", "PM")));

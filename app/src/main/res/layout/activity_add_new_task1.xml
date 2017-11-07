@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/htab_header"
+        android:layout_width="match_parent"
+        android:background="#3F51B5"
+        android:layout_height="250dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="8dp"
+        android:fitsSystemWindows="true"
+        app:layout_collapseMode="parallax">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:id="@+id/addNewTaskNameTextView"/>
+
+            <EditText
+                android:id="@+id/addNewTaskNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="e.g. Conference at 3am"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/addNewTaskFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@android:drawable/ic_dialog_email" />
+    </RelativeLayout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.example.osamamac.taskmanager.Activities.AddNewTaskActivity"
+        tools:showIn="@layout/activity_add_new_task">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutProject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskProjectImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskProjectTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskProjectImageView"
+                    android:text="@string/add_new_task_project"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskProject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskProjectTextView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskProjectImageView"
+                    android:text="@string/add_new_task_project_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskDateImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskDueDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskDateImageView"
+                    android:text="@string/add_new_task_due_date"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskDueDate"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskDateImageView"
+                    android:text="@string/add_new_task_due_date_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutPriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskPriorityImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskPriorityTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskPriorityImageView"
+                    android:text="@string/add_new_task_priority"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskPriority"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskPriorityTextView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskPriorityImageView"
+                    android:text="@string/add_new_task_priority_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutLabels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskLabelsImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskLabelsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskLabelsImageView"
+                    android:text="@string/add_new_task_labels"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskLabels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskLabelsTextView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskLabelsImageView"
+                    android:text="@string/add_new_task_labels_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskCommentsImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskCommentsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskCommentsImageView"
+                    android:text="@string/add_new_task_comments"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskCommentsTextView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskCommentsImageView"
+                    android:text="@string/add_new_task_comments_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutReminders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskRemindersImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskRemindersTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskRemindersImageView"
+                    android:text="@string/add_new_task_reminders"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskReminders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskRemindersTextView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskRemindersImageView"
+                    android:text="@string/add_new_task_reminders_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewTaskRelLayoutLocations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/addNewTaskLocationssImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/calendar" />
+
+                <TextView
+                    android:id="@+id/addNewTaskLocationsTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/addNewTaskLocationssImageView"
+                    android:text="@string/add_new_task_locations"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addNewTaskLocations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/addNewTaskLocationsTextView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@id/addNewTaskLocationssImageView"
+                    android:text="@string/add_new_task_locations_default"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

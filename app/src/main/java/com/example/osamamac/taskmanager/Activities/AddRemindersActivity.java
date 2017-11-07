@@ -1,11 +1,20 @@
 package com.example.osamamac.taskmanager.Activities;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,9 +25,12 @@ import android.widget.Toast;
 
 import com.example.osamamac.taskmanager.Adapters.CommentsAdapter;
 import com.example.osamamac.taskmanager.Adapters.RemindersAdapter;
+import com.example.osamamac.taskmanager.Database.SQLiteHandler;
 import com.example.osamamac.taskmanager.Model.Comment;
 import com.example.osamamac.taskmanager.Model.Reminder;
 import com.example.osamamac.taskmanager.R;
+import com.example.osamamac.taskmanager.Services.BootReceiver;
+import com.example.osamamac.taskmanager.Services.OneTimeAlarmReceiver;
 import com.example.osamamac.taskmanager.Utilities.Time;
 import com.example.osamamac.taskmanager.Utilities.Utils;
 
@@ -28,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class AddRemindersActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,8 +59,13 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
     String fullTime = "";
     String showDate = "";
 
+    private String[] reminderTypes;
+    private int reminderTypePosition = 0;
+
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     private TimePickerDialog.OnTimeSetListener onTimeSetListener;
+
+    private SQLiteHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +78,36 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
 
         remindersArray = new ArrayList<>();
 
+        db = new SQLiteHandler(this);
+
+        final List<Reminder> tempRemindersList = db.getAllTemporaryReminders();
+
+        if(tempRemindersList != null && tempRemindersList.size() > 0){
+            remindersArray = (ArrayList<Reminder>) tempRemindersList;
+
+            //Toast.makeText(this, tempRemindersList.size() + "", Toast.LENGTH_LONG).show();
+        }
+
         spinner = (Spinner) findViewById(R.id.addNewReminderSpinner);
 
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.reminder_types, android.R.layout.simple_spinner_item);
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        reminderTypes = getResources().getStringArray(R.array.reminder_types);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                reminderTypePosition = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spinner.setAdapter(spinnerAdapter);
 
@@ -176,9 +218,9 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.addNewReminderAddBtn:
-                Reminder newTempReminder = new Reminder(fullTime, "");
+                Reminder newTempReminder = new Reminder(fullTime, reminderTypes[reminderTypePosition]);
 
-                //db.addComment(newTempComment);
+                db.addTemporaryReminder(newTempReminder);
 
                 remindersArray.add(newTempReminder);
 
@@ -187,7 +229,45 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 btnDateAndTime.setText("Select Date and Time");
                 btnAddReminder.setEnabled(false);
 
+                setReminders(newTempReminder);
+
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(Utils.REMINDERS_RESULT_EXTRA, (remindersArray.size() > 0) ? String.valueOf(remindersArray.size()) + " Reminders" : "No Reminders");
+        setResult(Utils.REMINDERS_RESULT_CODE, intent);
+        finish();
+    }
+
+    private void setReminders(Reminder reminder){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent notificationIntent = new Intent("android.media.action.DISPLAY_NOTIFICATION");
+        PendingIntent broadcast = PendingIntent.getBroadcast(this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar cal = Calendar.getInstance();
+
+        String time = reminder.getDateTime();
+
+        Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
+        Log.i("DATE", time);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+
+        try {
+            Date date = simpleDateFormat.parse(time);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTime(), broadcast);
+            }else{
+                alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), broadcast);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 }

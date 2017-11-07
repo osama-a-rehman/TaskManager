@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.util.Util;
+import com.example.osamamac.taskmanager.Database.SQLiteHandler;
 import com.example.osamamac.taskmanager.Fragments.AddNewTaskPriorityFragment;
 import com.example.osamamac.taskmanager.Fragments.AddNewTaskProjectFragment;
 import com.example.osamamac.taskmanager.Interfaces.AddNewTaskFragmentsInterface;
@@ -52,20 +54,20 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
     private boolean showDiscardDialog = false;
 
+    private SQLiteHandler db;
+
+    private FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_task);
+        setContentView(R.layout.activity_add_new_task1);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.addNewTaskFab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(AddNewTaskActivity.this, "FAB Clicked", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -81,7 +83,16 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void init(){
+    private void init() {
+        setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        getSupportActionBar().setElevation(0);
+
+        // Disable toolbar title
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         projectLayout = (RelativeLayout) findViewById(R.id.addNewTaskRelLayoutProject);
         dateLayout = (RelativeLayout) findViewById(R.id.addNewTaskRelLayoutDate);
         priorityLayout = (RelativeLayout) findViewById(R.id.addNewTaskRelLayoutPriority);
@@ -105,6 +116,8 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         commentsLayout.setOnClickListener(this);
         remindersLayout.setOnClickListener(this);
         locationsLayout.setOnClickListener(this);
+
+        db = new SQLiteHandler(this);
 
         calendar = Calendar.getInstance();
 
@@ -148,8 +161,22 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            if(showDiscardDialog){
+                discardTask();
+
+                return true;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.addNewTaskRelLayoutProject:
 
                 AddNewTaskProjectFragment projectFragment = new AddNewTaskProjectFragment(this, projectTextView.getText().toString());
@@ -178,7 +205,7 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
                 Intent labelIntent = new Intent(AddNewTaskActivity.this, SelectLabelActivity.class);
 
-                if(!labelsTextView.getText().toString().equals("No Labels")){
+                if (!labelsTextView.getText().toString().equals("No Labels")) {
                     labelIntent.putExtra(Utils.SET_LABEL_EXTRA, labelsTextView.getText().toString());
                 }
 
@@ -214,19 +241,33 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
         Log.i("Request", String.valueOf(requestCode));
         Log.i("Request", String.valueOf(resultCode));
 
-        Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
 
-        if(requestCode == Utils.LABEL_REQUEST_CODE && resultCode == Utils.LABEL_RESULT_CODE){
-            if(data.hasExtra(Utils.LABEL_RESULT_EXTRA)){
+        if (requestCode == Utils.LABEL_REQUEST_CODE && resultCode == Utils.LABEL_RESULT_CODE) {
+            if (data.hasExtra(Utils.LABEL_RESULT_EXTRA)) {
                 labelsTextView.setText(data.getStringExtra(Utils.LABEL_RESULT_EXTRA).toString());
                 showDiscardDialog = true;
 //                Toast.makeText(this, data.getStringExtra(Utils.LABEL_RESULT_EXTRA).toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
-        if(requestCode == Utils.COMMENTS_REQUEST_CODE && resultCode == Utils.COMMENTS_RESULT_CODE){
-            if(data.hasExtra(Utils.COMMENTS_RESULT_EXTRA)){
+        if (requestCode == Utils.COMMENTS_REQUEST_CODE && resultCode == Utils.COMMENTS_RESULT_CODE) {
+            if (data.hasExtra(Utils.COMMENTS_RESULT_EXTRA)) {
                 commentsTextView.setText(data.getStringExtra(Utils.COMMENTS_RESULT_EXTRA).toString());
+                showDiscardDialog = true;
+            }
+        }
+
+        if (requestCode == Utils.REMINDERS_REQUEST_CODE && resultCode == Utils.REMINDERS_RESULT_CODE) {
+            if (data.hasExtra(Utils.REMINDERS_RESULT_EXTRA)) {
+                remindersTextView.setText(data.getStringExtra(Utils.REMINDERS_RESULT_EXTRA).toString());
+                showDiscardDialog = true;
+            }
+        }
+
+        if (requestCode == Utils.LOCATIONS_REQUEST_CODE && resultCode == Utils.LOCATIONS_RESULT_CODE) {
+            if (data.hasExtra(Utils.LOCATIONS_RESULT_EXTRA)) {
+                locationsTextView.setText(data.getStringExtra(Utils.LOCATIONS_RESULT_EXTRA).toString());
                 showDiscardDialog = true;
             }
         }
@@ -234,12 +275,12 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void doneSelecting(int id, String value) {
-        if(value != null && !value.equals("")){
-            if(id == Utils.PROJECT_FRAGMENT_ID){
+        if (value != null && !value.equals("")) {
+            if (id == Utils.PROJECT_FRAGMENT_ID) {
                 projectTextView.setText(value);
                 showDiscardDialog = true;
 
-            }else if(id == Utils.PRIORITY_FRAGMENT_ID){
+            } else if (id == Utils.PRIORITY_FRAGMENT_ID) {
                 priorityTextView.setText(value);
                 showDiscardDialog = true;
             }
@@ -249,29 +290,39 @@ public class AddNewTaskActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        if(showDiscardDialog){
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-            alertDialogBuilder.setTitle("Discard Task ?");
-            alertDialogBuilder.setMessage("Discard your changes to the task ?");
-
-            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-
-            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-
-            alertDialogBuilder.show();
-        }else{
+        if (showDiscardDialog) {
+            discardTask();
+        } else {
             super.onBackPressed();
         }
+    }
+
+    private void discardTask() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle("Discard Task ?");
+        alertDialogBuilder.setMessage("Discard your changes to the task ?");
+
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                db.discardTemporaryComments();
+                db.discardTemporaryReminders();
+                db.discardTemporaryLocations();
+
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialogBuilder.show();
+
     }
 }

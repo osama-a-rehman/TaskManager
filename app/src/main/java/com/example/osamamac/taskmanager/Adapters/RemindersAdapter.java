@@ -40,6 +40,8 @@ public class RemindersAdapter extends ArrayAdapter<Reminder> {
         Reminder reminder = getItem(position);
 
         TextView reminderDateTime = currentView.findViewById(R.id.reminderListItemDateTime);
+        TextView reminderType = currentView.findViewById(R.id.reminderListItemType);
+        reminderType.setText(reminder.getType());
 
         String dateTime[] = reminder.getDateTime().split(" ");
 
@@ -66,12 +68,12 @@ public class RemindersAdapter extends ArrayAdapter<Reminder> {
         }
 
         if(todaysDate.compareTo(selectedDate) == 0){
-            reminderDateTime.setText("Today " + dateTime[1] + " " + dateTime[2]);
+            reminderDateTime.setText("Today - " + dateTime[1] + " " + dateTime[2]);
         }else{
 
             String convertString = Utils.getStringMonth(Integer.parseInt(dateArray[1])-1) + " " + dateArray[0] + ", " + dateArray[2].substring(2);
 
-            reminderDateTime.setText(convertString + " " + dateTime[1] + " " + dateTime[2]);
+            reminderDateTime.setText(convertString + " - " + dateTime[1] + " " + dateTime[2]);
         }
 
 //        Log.i("Reminder", String.valueOf(calendar.get(Calendar.DATE)));

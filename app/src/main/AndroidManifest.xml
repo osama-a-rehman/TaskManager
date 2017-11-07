@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permisssion.ACCESS_COARSE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permisssion.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -25,10 +26,6 @@
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Activities.AddNewTaskActivity"
-            android:label="@string/title_activity_add_new_task"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,13 +34,38 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activities.AddNewTaskActivity"
+            android:label="@string/title_activity_add_new_task"
+            android:parentActivityName=".Activities.MainActivity">
+
+        </activity>
+        <activity
             android:name=".Activities.SelectLabelActivity"
             android:parentActivityName=".Activities.AddNewTaskActivity" />
         <activity
             android:name=".Activities.AddCommentsActivity"
             android:parentActivityName=".Activities.AddNewTaskActivity" />
-        <activity android:name=".Activities.AddRemindersActivity" />
-        <activity android:name=".Activities.AddLocationsActivity"></activity>
+        <activity android:name=".Activities.AddRemindersActivity"
+            android:parentActivityName=".Activities.AddNewTaskActivity"/>
+        <activity android:name=".Activities.AddLocationsActivity"
+            android:parentActivityName=".Activities.AddNewTaskActivity"></activity>
+
+        <!--<receiver android:name=".Services.OneTimeAlarmReceiver" />-->
+
+        <!--<receiver android:name=".Services.WakefulReceiver"/>-->
+
+        <!--<receiver android:name=".Services.BootReceiver"-->
+            <!--android:enabled="false">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <receiver android:name=".Services.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
